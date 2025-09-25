@@ -1,0 +1,72 @@
+name: Deploy (Remote Build via SSH)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Only to let you see commit info in the job; build happens on the server
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build on server & reload Nginx
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+
+            # 0) Variables
+            APP_DIR="/home/web3sec/Guild-Audit"
+            WEB_ROOT="$APP_DIR/dist"
+
+            # 1) Ensure required packages
+            if ! command -v git >/dev/null 2>&1; then
+              sudo apt-get update -y
+              sudo apt-get install -y git curl ca-certificates
+            fi
+
+            # 2) Ensure Node.js >= 18 (use NodeSource for Node 20.x)
+            NEED_NODE_INSTALL=1
+            if command -v node >/dev/null 2>&1; then
+              NODE_MAJ=$(node -v | sed 's/v\([0-9]*\).*/\1/')
+              if [ "$NODE_MAJ" -ge 18 ]; then NEED_NODE_INSTALL=0; fi
+            fi
+            if [ "$NEED_NODE_INSTALL" -eq 1 ]; then
+              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # 3) Pull latest code
+            if [ ! -d "$APP_DIR/.git" ]; then
+              git clone https://github.com/GuildAudits/Web3-Security-Summit-Africa.git "$APP_DIR"
+            fi
+            cd "$APP_DIR"
+            git fetch origin
+            git checkout main
+            git reset --hard origin/main
+
+            # 4) Install deps & build
+            npm ci
+            npm run build
+
+            # 5) Permissions (Nginx must read files)
+            sudo chmod 755 /home /home/web3sec "$APP_DIR" "$WEB_ROOT"
+            sudo find "$WEB_ROOT" -type d -exec chmod 755 {} \;
+            sudo find "$WEB_ROOT" -type f -exec chmod 644 {} \;
+            sudo chown -R web3sec:www-data "$APP_DIR"
+
+            # 6) Nginx sanity + reload
+            sudo nginx -t
+            sudo systemctl reload nginx
+
+            # 7) Quick health check (optional)
+            curl -sfI http://localhost >/dev/null || (echo "Local Nginx check failed" && exit 1)
