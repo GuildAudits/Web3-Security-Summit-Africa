@@ -4,6 +4,7 @@ import twitter from "../assets/twitter.svg";
 import TheBuidl from "../assets/TheBuidl.jpg";
 import Web3Afrika from "../assets/Web3 Afrika.png";
 import Web3Bridge from "../assets/Web3 Bridge.png";
+import Block from "../assets/block.jpg"
 
 // Local wrapper to safely render legacy <marquee> element without TS intrinsic typing
 const Marquee: React.FC<React.HTMLAttributes<HTMLElement> & { scrollAmount?: number; behavior?: string; direction?: string; }>
@@ -14,6 +15,8 @@ export const EventPartners: React.FC = () => {
     { id: "the-buidl", name: "The Buidl", logo: TheBuidl, site: "https://x.com/the_buidl", twitter: "https://x.com/the_buidl" },
     { id: "web3-afrika", name: "Web3 Afrika", logo: Web3Afrika, site: "https://x.com/web3afrika", twitter: "https://x.com/web3afrika" },
     { id: "web3-bridge", name: "Web3 Bridge", logo: Web3Bridge, site: "https://x.com/Web3Bridge", twitter: "https://x.com/Web3Bridge" },
+        { id: "Block-header", name: "BlockHeader Web3", logo: Block, site: "https://x.com/Blockheaderweb3", twitter: "https://x.com/Blockheaderweb3" },
+
   ];
 
   return (
