@@ -178,6 +178,5 @@ Set these under **Settings → Secrets and variables → Actions**:
 
 ---
 
-You can save this as `README.md` in the root of the repo.  
-Adjust any details (hardware specs, maintainer list, etc.) to match your exact setup.
+
 ```
