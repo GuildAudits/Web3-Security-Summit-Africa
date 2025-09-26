@@ -8,15 +8,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      # Safety check: fail early if secrets are missing (without printing them)
+      # ✅ Proper secret check (no invalid GitHub expression)
       - name: Validate required secrets
         run: |
-          : "${{ secrets.DEPLOY_HOST?DEPLOY_HOST secret is missing }}"
-          : "${{ secrets.DEPLOY_USER?DEPLOY_USER secret is missing }}"
-          : "${{ secrets.DEPLOY_SSH_KEY?DEPLOY_SSH_KEY secret is missing }}"
+          missing=0
+          [ -z "${{ secrets.DEPLOY_HOST }}" ] && echo "Missing DEPLOY_HOST" && missing=1
+          [ -z "${{ secrets.DEPLOY_USER }}" ] && echo "Missing DEPLOY_USER" && missing=1
+          [ -z "${{ secrets.DEPLOY_SSH_KEY }}" ] && echo "Missing DEPLOY_SSH_KEY" && missing=1
+          [ "$missing" -eq 0 ] || exit 1
 
       - name: Build on server & reload Nginx
         uses: appleboy/ssh-action@v1.2.0
@@ -24,42 +27,52 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
+          # ssh_args: "-o StrictHostKeyChecking=no"  # uncomment if host key prompts block you
           script_stop: true
           script: |
             set -euo pipefail
+
+            # --- Vars ---
             APP_DIR="/home/web3sec/Web3-Security-Summit-Africa"
             WEB_ROOT="$APP_DIR/dist"
+            REPO_URL="https://github.com/GuildAudits/Web3-Security-Summit-Africa.git"
+            BRANCH="main"
 
-            if ! command -v git >/dev/null; then
+            # --- Ensure base packages ---
+            if ! command -v git >/dev/null 2>&1; then
               sudo apt-get update -y
               sudo apt-get install -y git curl ca-certificates
             fi
 
-            # Ensure Node 20
-            if ! command -v node >/dev/null || [ "$(node -v | sed 's/v\([0-9]*\).*/\1/')" -lt 18 ]; then
+            # --- Ensure Node.js >= 18 (install Node 20 if needed) ---
+            if ! command -v node >/dev/null 2>&1 || [ "$(node -v | sed 's/v\([0-9]*\).*/\1/')" -lt 18 ]; then
               curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
               sudo apt-get install -y nodejs
             fi
 
-            # Clone once; pull on subsequent runs
+            # --- Clone or update repo ---
             if [ ! -d "$APP_DIR/.git" ]; then
-              git clone https://github.com/GuildAudits/Web3-Security-Summit-Africa.git "$APP_DIR"
+              mkdir -p "$(dirname "$APP_DIR")"
+              git clone "$REPO_URL" "$APP_DIR"
             fi
             cd "$APP_DIR"
-            git fetch origin
-            git checkout main
-            git reset --hard origin/main
+            git fetch --prune origin
+            git checkout "$BRANCH"
+            git reset --hard "origin/$BRANCH"
 
+            # --- Build ---
             npm ci
             npm run build
 
+            # --- Permissions so nginx can read files ---
             sudo chmod 755 /home /home/web3sec "$APP_DIR" "$WEB_ROOT"
             sudo find "$WEB_ROOT" -type d -exec chmod 755 {} \;
             sudo find "$WEB_ROOT" -type f -exec chmod 644 {} \;
             sudo chown -R web3sec:www-data "$APP_DIR"
 
+            # --- Nginx sanity + reload ---
             sudo nginx -t
             sudo systemctl reload nginx
 
-            # quick health check
-            curl -sfI http://localhost >/dev/null
+            # --- Health check (local) ---
+            curl -sfI http://localhost >/dev/null || (echo "Local Nginx check failed" && exit 1)
