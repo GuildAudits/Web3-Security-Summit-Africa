@@ -65,8 +65,7 @@ export const Herosection = () => {
               </div>
 
               <p className="text-black mt-4 sm:mt-6 text-base sm:text-lg md:text-xl md:text-left text-center max-w-2xl sm:max-w-3xl mx-auto md:mx-0">
-              ​The Web3 Security Summit Africa is a premier gathering of blockchain builders, security researchers, and industry leaders across the continent. This event will spotlight the most critical challenges in Web3 security, from smart contract vulnerabilities and DeFi exploits to cross-chain bridge risks and MEV, while showcasing solutions that make decentralized systems safer.              </p>
-
+The premier gathering of security researchers, blockchain builders and industry leaders across the continent. This event explores the most critical challenges in Web3 security while showcasing innovative solutions that strengthen and safeguard decentralized systems.</p>
               <div className="flex md:justify-start justify-center mt-6 sm:mt-8 gap-3 sm:gap-4 flex-wrap">
               <a href="https://luma.com/p8wpq25z" target="_blank" rel="noopener noreferrer"
 
@@ -101,7 +100,7 @@ export const Herosection = () => {
               )}
 
               <div className="mt-6 md:text-left text-center text-sm text-gray-600">
-                Follow us for updates: <a href="https://x.com/GuildAcademy_" className="underline-offset-2 hover:underline">@GuildAcademy_</a>
+                Follow us for updates: <a href="https://x.com/GuildAcademy_" className="underline-offset-2 hover:underline"> @Web3summitafrica</a>
               </div>
             </div>
           </div>
