@@ -1,13 +1,20 @@
 /// <reference path="../types/global.d.ts" />
-import React from "react";
+import type React from "react";
 import twitter from "../assets/twitter.svg";
 import TheBuidl from "../assets/TheBuidl.jpg";
 import Web3Afrika from "../assets/Web3 Afrika.png";
 import Web3Bridge from "../assets/Web3 Bridge.png";
 
 // Local wrapper to safely render legacy <marquee> element without TS intrinsic typing
-const Marquee: React.FC<React.HTMLAttributes<HTMLElement> & { scrollAmount?: number; behavior?: string; direction?: string; }>
-  = ({ children, ...rest }) => React.createElement('marquee' as any, rest, children);
+const Marquee: React.FC<
+  React.HTMLAttributes<HTMLElement> & {
+    scrollAmount?: number;
+    behavior?: string;
+    direction?: string;
+  }
+> = ({ children, ...rest }) => (
+  <marquee {...(rest as any)}>{children}</marquee>
+);
 
 export const EventPartners: React.FC = () => {
   const items = [

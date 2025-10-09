@@ -13,6 +13,7 @@ import Archive from "./Pages/Archive"
 import RegisterAttendee from "./Pages/RegisterAttendee"
 import RegisterSpeaker from "./Pages/RegisterSpeaker"
 import ScrollingBanner from "./components/ScrollingBanner"
+import { Speakers } from "./components/Speakers"
 
 function App() {
   const [route] = useHashRoute();
@@ -27,6 +28,8 @@ function App() {
         <EventStats/>
         <AboutSection/>
         <EventCards/>
+        <Speakers />
+
         <AttendSection/>
         <EventSponsors/>
         <EventPartners/>
