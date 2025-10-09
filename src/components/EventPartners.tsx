@@ -1,5 +1,5 @@
 /// <reference path="../types/global.d.ts" />
-import type React from "react";
+import React from "react";
 import twitter from "../assets/twitter.svg";
 import TheBuidl from "../assets/TheBuidl.jpg";
 import Web3Afrika from "../assets/Web3 Afrika.png";
@@ -12,9 +12,9 @@ const Marquee: React.FC<
     behavior?: string;
     direction?: string;
   }
-> = ({ children, ...rest }) => (
-  <marquee {...(rest as any)}>{children}</marquee>
-);
+> = ({ children, ...rest }) =>
+  // Use React.createElement to avoid JSX intrinsic element typing for <marquee>
+  React.createElement("marquee", rest as any, children);
 
 export const EventPartners: React.FC = () => {
   const items = [
