@@ -2,14 +2,16 @@
 import type React from "react";
 import Collins from "../assets/Collins.png";
 import Lanre from "../assets/Lanre.png";
-import Phil from "../assets/Phil.png";
 import twitter from "../assets/twitter.svg";
+import Nonce from "../assets/Nonse.jpeg";
+import Damilola from "../assets/Damilola.jpeg";
 
 export const Speakers: React.FC = () => {
   const items = [
     { id: "collins", name: " Patrick Collins", photo: Collins, twitter: "https://x.com/PatrickAlphaC" },
     { id: "lanre", name: "Lanre Bayode", photo: Lanre, twitter: "https://x.com/LanreBayode1" },
-    { id: "phil", name: "Phil", photo: Phil, twitter: "https://x.com/philbugcatcher" },
+    { id: "nonce", name: "Nonce", photo: Nonce, twitter: "X.com/NonseOdion" },
+    { id: "damilola", name: "Damilola", photo: Damilola, twitter: "https://x.com/eddiedammy" },
   ];
 
   return (
@@ -20,7 +22,7 @@ export const Speakers: React.FC = () => {
           Meet our speakers sharing insights throughout the event.
         </p>
 
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="mt-8 flex flex-wrap justify-center gap-8">
           {items.map((item) => (
             <a
               key={item.id}
@@ -28,7 +30,7 @@ export const Speakers: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${item.name} Twitter profile`}
-              className="block text-center shadow-md rounded-xl bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition outline-none focus:outline-none focus-visible:outline-none active:outline-none focus:ring-0 focus:ring-transparent focus:border-transparent"
+              className="basis-full sm:basis-[calc(50%-1rem)] md:basis-[calc(33.333%-1.333rem)] lg:basis-[calc(33.333%-1.333rem)] block text-center shadow-md rounded-xl bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition outline-none focus:outline-none focus-visible:outline-none active:outline-none focus:ring-0 focus:ring-transparent focus:border-transparent"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
               <div className="flex items-center justify-center p-6">
