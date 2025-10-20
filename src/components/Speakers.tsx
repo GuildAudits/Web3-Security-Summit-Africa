@@ -1,63 +1,76 @@
 /// <reference path="../types/global.d.ts" />
 import type React from "react";
 import Gracious from "../assets/speaker/Gracies.png";
-import Lawal from "../assets/speaker/Lawal.jpg";
 import LanreImg from "../assets/speaker/Olanrewaju Bayode (1).jpg";
 import Mani from "../assets/speaker/Mani.jpeg";
 import Nonse from "../assets/speaker/Nonse.jpeg";
 import Patrick from "../assets/speaker/Patrick1.jpg";
 import Damilola from "../assets/speaker/damilola edwards.jpg";
-
+import victor from "../assets/speaker/5857302851997516506 - VICTOR OKAFOR.webp"
+import Jason from "../assets/speaker/profile_image - Jason Tanner.jpeg"
 export const Speakers: React.FC = () => {
   const items = [
     {
       id: "patrick",
       name: "Patrick Collins",
-      description: "Smart contract educator and security advocate.",
+      description: "Co-founder and CEO Cyfrin Audits.",
       photo: Patrick,
       twitter: "https://x.com/PatrickAlphaC",
     },
     {
       id: "gracious",
       name: "Gracious Igwe",
-      description: "Web3 security enthusiast and community builder.",
+      description: "Blockchain Intelligence Analyst and Security Researcher.",
       photo: Gracious,
       twitter: "https://x.com/Greyshaws",
     },
-    {
-      id: "lawal",
-      name: "Lawal",
-      description: "Blockchain researcher and speaker.",
-      photo: Lawal,
-      twitter: undefined,
-    },
+    // {
+    //   id: "lawal",
+    //   name: "Lawal",
+    //   description: "Blockchain researcher and speaker.",
+    //   photo: Lawal,
+    //   twitter: undefined,
+    // },
     {
       id: "lanre",
       name: "Lanre Bayode",
-      description: "Blockchain researcher and speaker.",
+      description: "Independent Security Researcher.",
       photo: LanreImg,
       twitter: "https://x.com/LanreBayode1",
     },
     {
       id: "mani",
       name: "Mani",
-      description: "Security engineer focused on DeFi.",
+      description: "Web3 Security Recruiter.",
       photo: Mani,
       twitter: "https://x.com/manicybersec3",
     },
     {
       id: "nonse",
       name: "Nonse Odion",
-      description: "Smart contract auditor and speaker.",
+      description: "Security Researcher.",
       photo: Nonse,
       twitter: "https://x.com/NonseOdion",
     },
     {
       id: "damilola",
       name: "Damilola Edwards",
-      description: "Builder and educator in Web3 security.",
+      description: "Blockchain Security Engineer.",
       photo: Damilola,
       twitter: "https://x.com/eddiedammy",
+    },{
+      id: "damilola",
+      name: "Victor Okafor",
+      description: "Security Reseacher At @quilaudits.",
+      photo: victor,
+      twitter: "https://x.com/turvec_dev",
+    },
+    {
+      id: "damilola",
+      name: "Jason Tanner",
+      description: "Security Researcher @hexens.",
+      photo: Jason,
+      twitter: "https://x.com/_mr_thank_you_",
     },
   ];
 
@@ -69,19 +82,20 @@ export const Speakers: React.FC = () => {
           Meet our speakers sharing insights throughout the event.
         </p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-6">
+        <div className="mt-8 flex flex-wrap justify-center gap-8 md:gap-10">
           {items.map((item) => (
             <div
               key={item.id}
-              className="group w-[320px] text-left rounded-lg bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition"
+              className="group w-[360px] sm:w-[380px] text-left rounded-xl bg-white border border-gray-100 overflow-hidden shadow-md hover:shadow-2xl hover:ring-1 hover:ring-black/5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] transform-gpu will-change-transform hover:-translate-y-1 hover:scale-[1.02]"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
-              <div className="w-full h-60 overflow-hidden bg-gray-100">
+              <div className="relative w-full h-72 overflow-hidden bg-gray-100">
                 <img
                   src={item.photo}
                   alt={item.name}
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-cover object-center transform-gpu transition-transform duration-500 ease-out group-hover:scale-105"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </div>
               <div className="p-4">
                 {item.twitter ? (
@@ -90,15 +104,15 @@ export const Speakers: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${item.name} Twitter profile`}
-                    className="block text-black hover:text-blue-700 font-semibold leading-snug"
+                    className="block text-black hover:text-blue-700 font-semibold leading-snug text-lg sm:text-xl transition-colors duration-200"
                   >
                     {item.name}
                   </a>
                 ) : (
-                  <h3 className="text-[#0f1419] font-semibold leading-snug">{item.name}</h3>
+                  <h3 className="text-[#0f1419] font-semibold leading-snug text-lg sm:text-xl">{item.name}</h3>
                 )}
                 {item.description && (
-                  <p className="mt-1.5 text-sm text-gray-600">{item.description}</p>
+                  <p className="mt-1.5 text-base text-gray-600">{item.description}</p>
                 )}
               </div>
             </div>
