@@ -1,17 +1,64 @@
 /// <reference path="../types/global.d.ts" />
 import type React from "react";
-import Collins from "../assets/Collins.png";
-import Lanre from "../assets/Lanre.png";
-import twitter from "../assets/twitter.svg";
-import Nonce from "../assets/Nonse.jpeg";
-import Damilola from "../assets/Damilola.jpeg";
+import Gracious from "../assets/speaker/Gracies.png";
+import Lawal from "../assets/speaker/Lawal.jpg";
+import LanreImg from "../assets/speaker/Olanrewaju Bayode (1).jpg";
+import Mani from "../assets/speaker/Mani.jpeg";
+import Nonse from "../assets/speaker/Nonse.jpeg";
+import Patrick from "../assets/speaker/Patrick1.jpg";
+import Damilola from "../assets/speaker/damilola edwards.jpg";
 
 export const Speakers: React.FC = () => {
   const items = [
-    { id: "collins", name: " Patrick Collins", photo: Collins, twitter: "https://x.com/PatrickAlphaC" },
-    { id: "lanre", name: "Lanre Bayode", photo: Lanre, twitter: "https://x.com/LanreBayode1" },
-    { id: "nonce", name: "Nonce", photo: Nonce, twitter: "X.com/NonseOdion" },
-    { id: "damilola", name: "Damilola", photo: Damilola, twitter: "https://x.com/eddiedammy" },
+    {
+      id: "patrick",
+      name: "Patrick Collins",
+      description: "Smart contract educator and security advocate.",
+      photo: Patrick,
+      twitter: "https://x.com/PatrickAlphaC",
+    },
+    {
+      id: "gracious",
+      name: "Gracious Igwe",
+      description: "Web3 security enthusiast and community builder.",
+      photo: Gracious,
+      twitter: "https://x.com/Greyshaws",
+    },
+    {
+      id: "lawal",
+      name: "Lawal",
+      description: "Blockchain researcher and speaker.",
+      photo: Lawal,
+      twitter: undefined,
+    },
+    {
+      id: "lanre",
+      name: "Lanre Bayode",
+      description: "Blockchain researcher and speaker.",
+      photo: LanreImg,
+      twitter: "https://x.com/LanreBayode1",
+    },
+    {
+      id: "mani",
+      name: "Mani",
+      description: "Security engineer focused on DeFi.",
+      photo: Mani,
+      twitter: "https://x.com/manicybersec3",
+    },
+    {
+      id: "nonse",
+      name: "Nonse Odion",
+      description: "Smart contract auditor and speaker.",
+      photo: Nonse,
+      twitter: "https://x.com/NonseOdion",
+    },
+    {
+      id: "damilola",
+      name: "Damilola Edwards",
+      description: "Builder and educator in Web3 security.",
+      photo: Damilola,
+      twitter: "https://x.com/eddiedammy",
+    },
   ];
 
   return (
@@ -22,29 +69,39 @@ export const Speakers: React.FC = () => {
           Meet our speakers sharing insights throughout the event.
         </p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-8">
+        <div className="mt-8 flex flex-wrap justify-center gap-6">
           {items.map((item) => (
-            <a
+            <div
               key={item.id}
-              href={item.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${item.name} Twitter profile`}
-              className="basis-full sm:basis-[calc(50%-1rem)] md:basis-[calc(33.333%-1.333rem)] lg:basis-[calc(33.333%-1.333rem)] block text-center shadow-md rounded-xl bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition outline-none focus:outline-none focus-visible:outline-none active:outline-none focus:ring-0 focus:ring-transparent focus:border-transparent"
+              className="group w-[320px] text-left rounded-lg bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
-              <div className="flex items-center justify-center p-6">
+              <div className="w-full h-60 overflow-hidden bg-gray-100">
                 <img
                   src={item.photo}
                   alt={item.name}
-                  className=" "
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
-              <div className="mt-3 font-semibold text-black">{item.name}</div>
-              <div className="mt-2 pb-6 flex justify-center">
-                <img src={twitter} alt="Twitter/X" className="h-5 w-5" />
+              <div className="p-4">
+                {item.twitter ? (
+                  <a
+                    href={item.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${item.name} Twitter profile`}
+                    className="block text-black hover:text-blue-700 font-semibold leading-snug"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <h3 className="text-[#0f1419] font-semibold leading-snug">{item.name}</h3>
+                )}
+                {item.description && (
+                  <p className="mt-1.5 text-sm text-gray-600">{item.description}</p>
+                )}
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>
