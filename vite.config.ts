@@ -10,5 +10,6 @@ export default defineConfig({
   ],
    server: {
     port: 3000, // Change to your preferred port
+    allowedHosts: ['web3securitysummitafrica.com'],
   },
 })
