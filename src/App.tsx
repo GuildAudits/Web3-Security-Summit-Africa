@@ -14,6 +14,8 @@ import RegisterAttendee from "./Pages/RegisterAttendee"
 import RegisterSpeaker from "./Pages/RegisterSpeaker"
 import ScrollingBanner from "./components/ScrollingBanner"
 import { Speakers } from "./components/Speakers"
+import { ConferenceSchedule } from "./components/ConferenceSchedule"
+import { HostCoHost } from "./components/HostCoHost"
 
 function App() {
   const [route] = useHashRoute();
@@ -29,10 +31,11 @@ function App() {
         <AboutSection/>
         <EventCards/>
         <Speakers />
-
+        <HostCoHost />
         <AttendSection/>
         <EventSponsors/>
         <EventPartners/>
+        <ConferenceSchedule />
       </>
     )}
     {route === '/live' && (

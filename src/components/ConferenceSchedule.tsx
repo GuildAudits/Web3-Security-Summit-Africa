@@ -39,18 +39,26 @@ const sampleDays: DaySchedule[] = [
     date: "November 8, 2025",
     stage: "Main Stage",
     sessions: [
-      { time: "09:00 AM", stage: "Main Stage", title: "Arrival & Registration" },
-      { time: "09:30 AM", stage: "Main Stage", title: "Welcome address" },
-      { time: "10:00 AM", stage: "Main Stage", title: "Introduction", speaker: "" },
-      { time: "10:15 AM", stage: "Main Stage", title: "Introduction to Blockchain Technology", speaker: "" },
-      { time: "11:00 AM", stage: "Main Stage", title: "Beginners guide to successful career in Web3", speaker: "" },
-      { time: "11:45 AM", stage: "Main Stage", title: "From Web2 software to DevRel", speaker: "" },
-      { time: "12:15 PM", stage: "Main Stage", title: "Monorepos on Context Dirs", speaker: "" },
-      { time: "01:00 PM", stage: "Main Stage", title: "Lunch Break" },
-      { time: "02:00 PM", stage: "Main Stage", title: "Building the Future of Web3 Together", speaker: "" },
-      { time: "03:00 PM", stage: "Main Stage", title: "Designing Human-Centric Web3 Products", speaker: "" },
-      { time: "04:00 PM", stage: "Main Stage", title: "AI and you need to know: Web3 Edition", speaker: "" },
-      { time: "05:00 PM", stage: "Main Stage", title: "Africa’s onchain creative economy", speaker: "" },
+      { time: "10:00 - 10:05", stage: "Main Stage", title: "Welcome Address" },
+      { time: "10:05 - 10:15", stage: "Main Stage", title: "Blocksploit Presentation: AI-based static analyzer for offensive security", speaker: "Guild Academy students" },
+      { time: "10:15 - 10:25", stage: "Main Stage", title: "Solvra: Formal verification tool that runs on the cloud", speaker: "Guild Academy students" },
+      { time: "10:25 - 10:45", stage: "Main Stage", title: "Security Research Is for Everyone", speaker: "Nonse Ifebhor" },
+      { time: "10:45 - 10:55", stage: "Main Stage", title: "QA" },
+      { time: "10:55 - 11:15", stage: "Main Stage", title: "Security Considerations of DeFAI (DeFi + AI)", speaker: "Victor Okafor" },
+      { time: "11:15 - 11:20", stage: "Main Stage", title: "QA" },
+      { time: "11:30 - 11:50", stage: "Main Stage", title: "Follow the Money: Investigating On-Chain Attacks", speaker: "Gracious Igwe" },
+      { time: "11:50 - 12:00", stage: "Main Stage", title: "QA" },
+      { time: "12:10 - 12:50", stage: "Main Stage", title: "Calldata Verification", speaker: "Patrick Collins", sub: "Remote" },
+      { time: "12:50 - 01:10", stage: "Main Stage", title: "QA" },
+      { time: "01:10 - 02:10", stage: "Main Stage", title: "Games" },
+      { time: "01:20 - 01:50", stage: "Main Stage", title: "Finding Your Footing: Breaking Into Competitive Smart Contract Auditing", speaker: "Olanrewaju Bayode" },
+      { time: "01:50 - 02:30", stage: "Main Stage", title: "Trust But Validate: Hardening DeFi Security with AI and FV", speaker: "Mooly Sagiv (CEO, Certora)", sub: "Remote" },
+      { time: "02:30 - 03:00", stage: "Main Stage", title: "Panel Session - The Future of DeFi Security", speaker: "Damilola Edwards, Victor Okafor, Olanrewaju Bayode, Nonse Ifebhor, Gracious Igwe" },
+      { time: "03:00 - 03:25", stage: "Main Stage", title: "Finding Vulnerabilities at Scale: A Deep Dive into Glider & Remedy’s Glider Contest", speaker: "Jason Tanner", sub: "Remote" },
+      { time: "03:25 - 03:35", stage: "Main Stage", title: "QA" },
+      { time: "03:40 - 04:00", stage: "Main Stage", title: "The Art of Auditing (Becoming a code detective)", speaker: "Damilola Edwards" },
+      { time: "04:00 - 04:30", stage: "Main Stage", title: "Careers in Web3 Cybersecurity", speaker: "Mani Anwer", sub: "Remote" },
+      { time: "04:30 - 04:40", stage: "Main Stage", title: "QA" },
     ],
   },
 ];
@@ -61,11 +69,12 @@ const Pill: React.FC<{ children: React.ReactNode; className?: string }> = ({ chi
   </span>
 );
 
-export const ConferenceSchedule: React.FC<{ days?: DaySchedule[]; streamUrl?: string }> = ({ days }) => {
+export const ConferenceSchedule: React.FC<{ days?: DaySchedule[]; streamUrl?: string }> = ({ days, streamUrl }) => {
   const data = days ?? sampleDays;
   const [active, setActive] = useState(data[0]?.id ?? "day1");
   const activeDay = useMemo(() => data.find((d) => d.id === active) ?? data[0], [data, active]);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft());
+  const streamLink = streamUrl ?? '#/live';
 
   useEffect(() => {
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
@@ -118,7 +127,12 @@ export const ConferenceSchedule: React.FC<{ days?: DaySchedule[]; streamUrl?: st
             <div className="text-sm text-gray-500">
               <span className="font-medium text-gray-700">{activeDay.label}</span> • {activeDay.date}
             </div>
-            <Pill>{activeDay.stage}</Pill>
+            <a
+              href={streamLink}
+              className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              View Stream
+            </a>
           </div>
         </div>
 

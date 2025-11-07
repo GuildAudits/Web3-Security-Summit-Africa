@@ -8,6 +8,7 @@ import Patrick from "../assets/speaker/Patrick1.jpg";
 import Damilola from "../assets/speaker/damilola edwards.jpg";
 import victor from "../assets/speaker/5857302851997516506 - VICTOR OKAFOR.webp"
 import Jason from "../assets/speaker/profile_image - Jason Tanner.jpeg"
+import Sagiv from '../assets/speaker/Mooly Sagiv image.png'
 export const Speakers: React.FC = () => {
   const items = [
     {
@@ -71,6 +72,13 @@ export const Speakers: React.FC = () => {
       description: "Security Researcher @hexens.",
       photo: Jason,
       twitter: "https://x.com/_mr_thank_you_",
+    },
+    {
+      id: "Mooly Sagiv",
+      name: "Mooly Sagiv",
+      description: "Chief Scientist @CertoraInc and a chair of software systems at @TelAvivUni",
+      photo: Sagiv,
+      twitter: "https://x.com/SagivMooly",
     },
   ];
 
